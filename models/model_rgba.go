@@ -1,0 +1,13 @@
+package models
+
+// RGBA An RGBA color
+type RGBA struct {
+	// Red channel value, between 0 and 1.
+	R float64 `json:"r"`
+	// Green channel value, between 0 and 1.
+	G float64 `json:"g"`
+	// Blue channel value, between 0 and 1.
+	B float64 `json:"b"`
+	// Alpha channel value, between 0 and 1.
+	A float64 `json:"a"`
+}
