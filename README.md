@@ -14,6 +14,8 @@ Currently, the library supports the following Figma API functionalities:
 
 - **Image Export**: Export nodes from Figma files into raster formats such as PNG or JPEG. [GET image](https://www.figma.com/developers/api#get-images-endpoint), [GET image fills](https://www.figma.com/developers/api#get-image-fills-endpoint)
 
+- **Font Find**: Getting a static link to download a font file from static.figma.com.
+
 For more detailed information about the Figma REST API and its capabilities, please refer to the [official documentation](https://www.figma.com/developers/api).
 
 Please note that at this time, the library implements only file operations and image export. Support for other Figma API features may be added in future versions.
