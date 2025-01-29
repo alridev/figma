@@ -105,7 +105,7 @@ type TextNode struct {
 	// Style of text including font family and weight.
 	Style TypeStyle `json:"style"`
 	// The array corresponds to characters in the text box, where each element references the 'styleOverrideTable' to apply specific styles to each character. The array's length can be less than or equal to the number of characters due to the removal of trailing zeros. Elements with a value of 0 indicate characters that use the default type style. If the array is shorter than the total number of characters, the characters beyond the array's length also use the default style.
-	CharacterStyleOverrides []float64 `json:"characterStyleOverrides"`
+	CharacterStyleOverrides []int `json:"characterStyleOverrides"`
 	// Internal property, preserved for backward compatibility. Avoid using this value.
 	LayoutVersion float64 `json:"layoutVersion,omitempty"`
 	// Map from ID to TypeStyle for looking up style overrides.
