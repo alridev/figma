@@ -3,9 +3,28 @@ package fonts
 import (
 	"fmt"
 	"net/http"
+	"sync"
+	"time"
 )
 
-func findInFigma(fontPostScriptName string) string {
+var (
+	client = &http.Client{
+		Timeout: 5 * time.Second,
+	}
+	
+	// Кэш для уже найденных шрифтов
+	fontCache = sync.Map{}
+)
+
+func findInFigma(fontFamily string, fontPostScriptName string) string {
+	// Проверяем кэш
+	if cachedURL, ok := fontCache.Load(fontPostScriptName); ok {
+		return cachedURL.(string)
+	}
+	if cachedURL, ok := fontCache.Load(fontFamily); ok {
+		return cachedURL.(string)
+	}
+
 	urls := []string{
 		"https://static.figma.com/font/%s_1",
 		"https://static.figma.com/font/%s_2",
@@ -15,24 +34,53 @@ func findInFigma(fontPostScriptName string) string {
 		"https://static.figma.com/font/%s_wght_3",
 	}
 
-	for _, url := range urls {
-		// Создаем HEAD запрос для проверки существования файла
-		req, err := http.NewRequest("HEAD", fmt.Sprintf(url, fontPostScriptName), nil)
+	// Канал для результатов
+	results := make(chan string, len(urls)*2)
+	var wg sync.WaitGroup
+
+	// Функция для проверки URL
+	checkURL := func(url, name string) {
+		defer wg.Done()
+		req, err := http.NewRequest("HEAD", fmt.Sprintf(url, name), nil)
 		if err != nil {
-			continue
+			return
 		}
 		req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
-		client := &http.Client{}
+		
 		response, err := client.Do(req)
 		if err == nil && response.StatusCode == 200 {
-			return fmt.Sprintf(url, fontPostScriptName)
+			results <- fmt.Sprintf(url, name)
+			return
+		}
+		if response != nil {
+			response.Body.Close()
 		}
 	}
+
+	// Запускаем горутины для проверки всех URL
+	for _, url := range urls {
+		wg.Add(2)
+		go checkURL(url, fontPostScriptName)
+		go checkURL(url, fontFamily)
+	}
+
+	// Ждем завершения всех горутин
+	go func() {
+		wg.Wait()
+		close(results)
+	}()
+
+	// Получаем первый успешный результат
+	for result := range results {
+		fontCache.Store(fontPostScriptName, result)
+		return result
+	}
+
 	return ""
 }
 
 func FindFont(fontFamily string, fontPostScriptName string, fontWeight int) (string, error) {
-	fromFigma := findInFigma(fontPostScriptName)
+	fromFigma := findInFigma(fontFamily, fontPostScriptName)
 	if fromFigma == "" {
 		return "", fmt.Errorf("шрифт не найден в Figma")
 	}
