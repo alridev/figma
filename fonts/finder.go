@@ -10,6 +10,9 @@ func findInFigma(fontPostScriptName string) string {
 		"https://static.figma.com/font/%s_1",
 		"https://static.figma.com/font/%s_2",
 		"https://static.figma.com/font/%s_3",
+		"https://static.figma.com/font/%s_wght_1",
+		"https://static.figma.com/font/%s_wght_2",
+		"https://static.figma.com/font/%s_wght_3",
 	}
 
 	for _, url := range urls {
@@ -30,6 +33,9 @@ func findInFigma(fontPostScriptName string) string {
 
 func FindFont(fontFamily string, fontPostScriptName string, fontWeight int) (string, error) {
 	fromFigma := findInFigma(fontPostScriptName)
+	if fromFigma == "" {
+		return "", fmt.Errorf("шрифт не найден в Figma")
+	}
 	return fromFigma, nil
 }
 
