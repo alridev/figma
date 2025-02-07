@@ -11,7 +11,7 @@ var (
 	client = &http.Client{
 		Timeout: 5 * time.Second,
 	}
-	
+
 	// Кэш для уже найденных шрифтов
 	fontCache = sync.Map{}
 )
@@ -46,7 +46,7 @@ func findInFigma(fontFamily string, fontPostScriptName string) string {
 			return
 		}
 		req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
-		
+
 		response, err := client.Do(req)
 		if err == nil && response.StatusCode == 200 {
 			results <- fmt.Sprintf(url, name)

@@ -57,4 +57,7 @@ type TypeStyle struct {
 	SemanticWeight string `json:"semanticWeight,omitempty"`
 	// Indicates how the font style was overridden when there is a text style override.
 	SemanticItalic string `json:"semanticItalic,omitempty"`
+	// Whether or not the text should be trimmed at the beginning.
+	LeadingTrim string `json:"leadingTrim,omitempty"`
+	
 }
