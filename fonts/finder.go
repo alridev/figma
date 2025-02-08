@@ -28,6 +28,7 @@ func findInFigma(fontFamily string, fontPostScriptName string) string {
 	}
 
 	urls := []string{
+		// base
 		"https://static.figma.com/font/%s_1",
 		"https://static.figma.com/font/%s_2",
 		"https://static.figma.com/font/%s_3",
@@ -38,6 +39,20 @@ func findInFigma(fontFamily string, fontPostScriptName string) string {
 		"https://static.figma.com/font/%s_8",
 		"https://static.figma.com/font/%s_9",
 		"https://static.figma.com/font/%s_10",
+
+		// wdth
+		"https://static.figma.com/font/%s_wdth__1",
+		"https://static.figma.com/font/%s_wdth__2",
+		"https://static.figma.com/font/%s_wdth__3",
+		"https://static.figma.com/font/%s_wdth__4",
+		"https://static.figma.com/font/%s_wdth__5",
+		"https://static.figma.com/font/%s_wdth__6",
+		"https://static.figma.com/font/%s_wdth__7",
+		"https://static.figma.com/font/%s_wdth__8",
+		"https://static.figma.com/font/%s_wdth__9",
+		"https://static.figma.com/font/%s_wdth__10",
+
+		// wght
 		"https://static.figma.com/font/%s_wght__1",
 		"https://static.figma.com/font/%s_wght__2",
 		"https://static.figma.com/font/%s_wght__3",
@@ -48,16 +63,18 @@ func findInFigma(fontFamily string, fontPostScriptName string) string {
 		"https://static.figma.com/font/%s_wght__8",
 		"https://static.figma.com/font/%s_wght__9",
 		"https://static.figma.com/font/%s_wght__10",
-		"https://static.figma.com/font/%s_wght_wght__1",
-		"https://static.figma.com/font/%s_wght_wght__2",
-		"https://static.figma.com/font/%s_wght_wght__3",
-		"https://static.figma.com/font/%s_wght_wght__4",
-		"https://static.figma.com/font/%s_wght_wght__5",
-		"https://static.figma.com/font/%s_wght_wght__6",
-		"https://static.figma.com/font/%s_wght_wght__7",
-		"https://static.figma.com/font/%s_wght_wght__8",
-		"https://static.figma.com/font/%s_wght_wght__9",
-		"https://static.figma.com/font/%s_wght_wght__10",
+
+		// wdth_wght
+		"https://static.figma.com/font/%s_wdth_wght__1",
+		"https://static.figma.com/font/%s_wdth_wght__2",
+		"https://static.figma.com/font/%s_wdth_wght__3",
+		"https://static.figma.com/font/%s_wdth_wght__4",
+		"https://static.figma.com/font/%s_wdth_wght__5",
+		"https://static.figma.com/font/%s_wdth_wght__6",
+		"https://static.figma.com/font/%s_wdth_wght__7",
+		"https://static.figma.com/font/%s_wdth_wght__8",
+		"https://static.figma.com/font/%s_wdth_wght__9",
+		"https://static.figma.com/font/%s_wdth_wght__10",
 	}
 
 	// add urls from .env
