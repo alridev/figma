@@ -3,6 +3,8 @@ package fonts
 import (
 	"fmt"
 	"net/http"
+	"os"
+	"strings"
 	"sync"
 	"time"
 )
@@ -29,9 +31,44 @@ func findInFigma(fontFamily string, fontPostScriptName string) string {
 		"https://static.figma.com/font/%s_1",
 		"https://static.figma.com/font/%s_2",
 		"https://static.figma.com/font/%s_3",
-		"https://static.figma.com/font/%s_wght_1",
-		"https://static.figma.com/font/%s_wght_2",
-		"https://static.figma.com/font/%s_wght_3",
+		"https://static.figma.com/font/%s_4",
+		"https://static.figma.com/font/%s_5",
+		"https://static.figma.com/font/%s_6",
+		"https://static.figma.com/font/%s_7",
+		"https://static.figma.com/font/%s_8",
+		"https://static.figma.com/font/%s_9",
+		"https://static.figma.com/font/%s_10",
+		"https://static.figma.com/font/%s_wght__1",
+		"https://static.figma.com/font/%s_wght__2",
+		"https://static.figma.com/font/%s_wght__3",
+		"https://static.figma.com/font/%s_wght__4",
+		"https://static.figma.com/font/%s_wght__5",
+		"https://static.figma.com/font/%s_wght__6",
+		"https://static.figma.com/font/%s_wght__7",
+		"https://static.figma.com/font/%s_wght__8",
+		"https://static.figma.com/font/%s_wght__9",
+		"https://static.figma.com/font/%s_wght__10",
+		"https://static.figma.com/font/%s_wght_wght__1",
+		"https://static.figma.com/font/%s_wght_wght__2",
+		"https://static.figma.com/font/%s_wght_wght__3",
+		"https://static.figma.com/font/%s_wght_wght__4",
+		"https://static.figma.com/font/%s_wght_wght__5",
+		"https://static.figma.com/font/%s_wght_wght__6",
+		"https://static.figma.com/font/%s_wght_wght__7",
+		"https://static.figma.com/font/%s_wght_wght__8",
+		"https://static.figma.com/font/%s_wght_wght__9",
+		"https://static.figma.com/font/%s_wght_wght__10",
+	}
+
+	// add urls from .env
+	figmaUrls := os.Getenv("FIGMA_FONTS_URLS_LIST")
+	if figmaUrls != "" {
+		if os.Getenv("FIGMA_FONTS_REPLACE_URLS") == "true" {
+			urls = strings.Split(figmaUrls, ",")
+		} else {
+			urlsEnv := strings.Split(figmaUrls, ",")
+			urls = append(urls, urlsEnv...)
+		}
 	}
 
 	// Канал для результатов
