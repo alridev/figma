@@ -17,7 +17,7 @@ func GetFileWithAdditionalParams(api *figma.FigmaAPI, key string, version string
 	// ?geometry - формат геометрии (paths или bounds)
 	// ?plugin_data - данные плагина
 	// ?branch_data - включить данные о ветках
-	// !ids - список ID узлов для получения
+	// ?ids - список ID узлов для получения
 	// Возвращает метаданные файла (name, lastModified, thumbnailUrl и т.д.) и сам документ
 	// В components содержится маппинг ID узлов на метаданные компонентов
 
@@ -29,8 +29,6 @@ func GetFileWithAdditionalParams(api *figma.FigmaAPI, key string, version string
 	}
 	if len(ids) > 0 {
 		api.AddQuery(request, "ids", formatIds(ids...))
-	} else {
-		return file, fmt.Errorf("must provide at least one node")
 	}
 	if version != "" {
 		api.AddQuery(request, "version", version)
@@ -69,7 +67,7 @@ func GetFile(api *figma.FigmaAPI, key string, ids ...string) (m.File, error) {
 	//
 	// Параметры:
 	// !key - ключ файла из URL: https://www.figma.com/:file_type/:file_key/:file_name
-	// !ids - список ID узлов для получения
+	// ?ids - список ID узлов для получения
 
 	return GetFileWithAdditionalParams(api, key, "", 0, "", "", -1, ids...)
 }
