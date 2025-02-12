@@ -18,12 +18,9 @@ var (
 	fontCache = sync.Map{}
 )
 
-func findInFigma(fontFamily string, fontPostScriptName string) string {
+func findInFigma(fontPostScriptName string) string {
 	// Проверяем кэш
 	if cachedURL, ok := fontCache.Load(fontPostScriptName); ok {
-		return cachedURL.(string)
-	}
-	if cachedURL, ok := fontCache.Load(fontFamily); ok {
 		return cachedURL.(string)
 	}
 
@@ -115,7 +112,6 @@ func findInFigma(fontFamily string, fontPostScriptName string) string {
 	for _, url := range urls {
 		wg.Add(2)
 		go checkURL(url, fontPostScriptName)
-		go checkURL(url, fontFamily)
 	}
 
 	// Ждем завершения всех горутин
@@ -133,8 +129,8 @@ func findInFigma(fontFamily string, fontPostScriptName string) string {
 	return ""
 }
 
-func FindFont(fontFamily string, fontPostScriptName string, fontWeight int) (string, error) {
-	fromFigma := findInFigma(fontFamily, fontPostScriptName)
+func FindFont(fontPostScriptName string) (string, error) {
+	fromFigma := findInFigma(fontPostScriptName)
 	if fromFigma == "" {
 		return "", fmt.Errorf("шрифт не найден в Figma")
 	}

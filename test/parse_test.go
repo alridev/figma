@@ -13,11 +13,11 @@ import (
 )
 
 func TestFindFont(t *testing.T) {
-	font, err := fonts.FindFont("Fira Code", "FiraCode-Regular", 400)
+	font, err := fonts.FindFont("FiraCode-Regular")
 	assert.NoError(t, err)
 	assert.NotEmpty(t, font)
 
-	font, err = fonts.FindFont("Inter", "Inter-Regular", 400)
+	font, err = fonts.FindFont("Inter-Regular")
 	assert.NoError(t, err)
 	assert.NotEmpty(t, font)
 }
