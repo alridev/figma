@@ -110,7 +110,7 @@ func findInFigma(fontPostScriptName string) string {
 
 	// Запускаем горутины для проверки всех URL
 	for _, url := range urls {
-		wg.Add(2)
+		wg.Add(1)
 		go checkURL(url, fontPostScriptName)
 	}
 
